@@ -14,6 +14,12 @@ exports['atom to string'] = function (test) {
     test.strictEqual(atom.toString(), 'foo');
 };
 
+exports['atom name'] = function (test) {
+    var atom = atoms.atom('foo');
+    
+    test.strictEqual(atom.name(), 'foo');
+};
+
 exports['is atom'] = function (test) {
     var atom = atoms.atom('foo');
 
