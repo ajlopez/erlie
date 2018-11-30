@@ -1,0 +1,27 @@
+{
+  "name": "erlie",
+  "description": "Erlang-like interpreter in JavaScript, WIP",
+  "keywords": [
+    "javascript",
+    "erlang",
+    "interpreter"
+  ],
+  "version": "0.0.1alpha",
+  "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ajlopez/erlie.git"
+  },
+  "main": "./lib/erlie.js",
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "scripts": {
+    "test": "simpleunit ./test -r"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "simpleunit": "0.0.7"
+  }
+}
