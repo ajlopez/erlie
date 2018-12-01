@@ -1,6 +1,7 @@
 
 var contexts = require('../lib/contexts');
 var variables = require('../lib/variables');
+var tuples = require('../lib/tuples');
 
 exports['create context'] = function (test) {
     var context = contexts.context();
@@ -101,4 +102,31 @@ exports['match unbound variable to another variable'] = function (test) {
     test.ok(context.match(varx, vary));
     
     test.equal(context.resolve(varx), vary);
+};
+
+exports['match two tuples with constant values'] = function (test) {
+    var context = contexts.context();
+    
+    var tuple1 = tuples.tuple([1, 4, 9]);
+    var tuple2 = tuples.tuple([1, 4, 9]);
+    
+    test.ok(context.match(tuple1, tuple2));
+};
+
+exports['does not match two tuples with different sizes'] = function (test) {
+    var context = contexts.context();
+    
+    var tuple1 = tuples.tuple([1, 4, 9]);
+    var tuple2 = tuples.tuple([1, 4]);
+    
+    test.ok(!context.match(tuple1, tuple2));
+};
+
+exports['does not match two tuples with same size and different values'] = function (test) {
+    var context = contexts.context();
+    
+    var tuple1 = tuples.tuple([1, 4, 9]);
+    var tuple2 = tuples.tuple([1, 2, 3]);
+    
+    test.ok(!context.match(tuple1, tuple2));
 };
