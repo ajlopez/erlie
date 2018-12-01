@@ -173,6 +173,21 @@ exports['match tuples with interchanged variables'] = function (test) {
     test.equal(context.resolve(vary), 42);
 };
 
+exports['does not match tuples and retract processed variable bindings'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    var tuple1 = tuples.tuple([varx, vary, varx, vary]);
+    var tuple2 = tuples.tuple([vary, varx, 42, 43]);
+    
+    test.ok(!context.match(tuple1, tuple2));
+    
+    test.equal(context.resolve(varx), varx);
+    test.equal(context.resolve(vary), vary);
+};
+
 exports['does not match two tuples with different sizes'] = function (test) {
     var context = contexts.context();
     
