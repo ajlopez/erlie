@@ -3,6 +3,19 @@ var tuples = require('../lib/tuples');
 var contexts = require('../lib/contexts');
 var variables = require('../lib/variables');
 
+exports['is tuple'] = function (test) {
+    test.ok(tuples.isTuple(tuples.tuple([])));
+    test.ok(tuples.isTuple(tuples.tuple([1, 2, 3])));
+
+    test.ok(!tuples.isTuple(undefined));
+    test.ok(!tuples.isTuple(null));
+    test.ok(!tuples.isTuple(42));
+    test.ok(!tuples.isTuple("foo"));
+    test.ok(!tuples.isTuple(false));
+    test.ok(!tuples.isTuple(true));
+    test.ok(!tuples.isTuple([1, 2, 3]));
+};
+
 exports['create empty tuple'] = function (test) {
     var tuple = tuples.tuple([]);
     
