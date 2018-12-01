@@ -40,3 +40,12 @@ exports['evaluate unbound variable to itself'] = function (test) {
     test.equal(variable.evaluate(context), variable);
 };
 
+exports['evaluate bound variable'] = function (test) {
+    var variable = variables.variable('X');
+    var context = contexts.context();
+    
+    context.bind(variable, 42);
+    
+    test.equal(variable.evaluate(context), 42);
+};
+
