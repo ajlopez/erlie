@@ -1,5 +1,6 @@
 
 var atoms = require('../lib/atoms');
+var variables = require('../lib/variables');
 
 exports['create atom'] = function (test) {
     var atom = atoms.atom('foo');
@@ -25,6 +26,7 @@ exports['is atom'] = function (test) {
 
     test.ok(atoms.isAtom(atom));
     test.ok(!atoms.isAtom(null));
+    test.ok(!atoms.isAtom(variables.variable('X')));
     test.ok(!atoms.isAtom(42));
     test.ok(!atoms.isAtom("foo"));
     test.ok(!atoms.isAtom({}));
