@@ -15,3 +15,13 @@ exports['resolve unbound variable'] = function (test) {
     
     test.equal(context.resolve(varx), varx);
 };
+
+exports['bind and resolve variable'] = function (test) {
+    var varx = variables.variable('X');
+    var context = contexts.context();
+    
+    context.bind(varx, 42);
+    
+    test.equal(context.resolve(varx), 42);
+};
+
