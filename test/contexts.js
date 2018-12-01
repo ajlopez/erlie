@@ -130,6 +130,21 @@ exports['match tuple with variables with tuple with constant values'] = function
     test.equal(context.resolve(varz), 9);
 };
 
+exports['match tuple with repeated variable with tuple with constant values'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    var tuple1 = tuples.tuple([varx, vary, vary]);
+    var tuple2 = tuples.tuple([1, 4, 4]);
+    
+    test.ok(context.match(tuple1, tuple2));
+    
+    test.equal(context.resolve(varx), 1);
+    test.equal(context.resolve(vary), 4);
+};
+
 exports['does not match two tuples with different sizes'] = function (test) {
     var context = contexts.context();
     
