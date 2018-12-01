@@ -1,5 +1,6 @@
 
 var contexts = require('../lib/contexts');
+var atoms = require('../lib/atoms');
 var variables = require('../lib/variables');
 var tuples = require('../lib/tuples');
 
@@ -81,6 +82,25 @@ exports['match simple values'] = function (test) {
     test.ok(!context.match(null, false));
     test.ok(!context.match(false, true));
     test.ok(!context.match(true, false));
+};
+
+exports['match atoms'] = function (test) {
+    var context = contexts.context();
+    
+    var atom1 = atoms.atom('a');
+    var atom2 = atoms.atom('a');
+    var atom3 = atoms.atom('b');
+    
+    test.ok(context.match(atom1, atom1));
+    test.ok(context.match(atom1, atom2));
+    test.ok(context.match(atom2, atom1));
+    test.ok(context.match(atom2, atom2));
+    test.ok(context.match(atom3, atom3));
+
+    test.ok(!context.match(atom1, atom3));
+    test.ok(!context.match(atom2, atom3));
+    test.ok(!context.match(atom3, atom1));
+    test.ok(!context.match(atom3, atom2));
 };
 
 exports['match unbound variable'] = function (test) {
