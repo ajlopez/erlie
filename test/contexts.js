@@ -53,3 +53,19 @@ exports['bind and resolve variable using variable value'] = function (test) {
     test.equal(context.resolve(varx), vary);
 };
 
+exports['match simple values'] = function (test) {
+    var context = contexts.context();
+    
+    test.ok(context.match(42, 42));
+    test.ok(context.match("foo", "foo"));
+    test.ok(context.match(null, null));
+    test.ok(context.match(false, false));
+    test.ok(context.match(true, true));
+
+    test.ok(!context.match(42, "42"));
+    test.ok(!context.match("foo", "bar"));
+    test.ok(!context.match(null, false));
+    test.ok(!context.match(false, true));
+    test.ok(!context.match(true, false));
+};
+
