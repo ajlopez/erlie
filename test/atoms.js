@@ -32,3 +32,8 @@ exports['is atom'] = function (test) {
     test.ok(!atoms.isAtom({}));
 };
 
+exports['evaluate atom to itself'] = function (test) {
+    var atom = atoms.atom('foo');
+    
+    test.equal(atom.evaluate(null), atom);
+};
