@@ -86,3 +86,24 @@ exports['subtract expression using variables'] = function (test) {
     test.strictEqual(expr.evaluate(context), 42);
 };
 
+exports['multiply expression using constants'] = function (test) {
+    var context = contexts.context();
+    
+    var expr = x.multiply(x.constant(21), x.constant(2));
+    
+    test.strictEqual(expr.evaluate(context), 42);
+};
+
+exports['multiply expression using variables'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    context.bind(varx, 21);
+    context.bind(vary, 2);
+    
+    var expr = x.multiply(varx, vary);
+    
+    test.strictEqual(expr.evaluate(context), 42);
+};
