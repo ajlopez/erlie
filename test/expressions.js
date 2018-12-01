@@ -64,3 +64,25 @@ exports['add expression using variables'] = function (test) {
     test.strictEqual(expr.evaluate(context), 42);
 };
 
+exports['subtract expression using constants'] = function (test) {
+    var context = contexts.context();
+    
+    var expr = x.subtract(x.constant(44), x.constant(2));
+    
+    test.strictEqual(expr.evaluate(context), 42);
+};
+
+exports['subtract expression using variables'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    context.bind(varx, 44);
+    context.bind(vary, 2);
+    
+    var expr = x.subtract(varx, vary);
+    
+    test.strictEqual(expr.evaluate(context), 42);
+};
+
