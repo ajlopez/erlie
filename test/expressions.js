@@ -42,3 +42,17 @@ exports['match expression'] = function (test) {
     test.equal(context.resolve(variables.variable('X')), 42);
 };
 
+exports['add expression using variables'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    context.bind(varx, 40);
+    context.bind(vary, 2);
+    
+    var expr = x.add(varx, vary);
+    
+    test.strictEqual(expr.evaluate(context), 42);
+};
+
