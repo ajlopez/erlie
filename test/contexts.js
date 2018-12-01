@@ -69,3 +69,14 @@ exports['match simple values'] = function (test) {
     test.ok(!context.match(true, false));
 };
 
+exports['match unbound variable'] = function (test) {
+    var context = contexts.context();
+    var varx = variables.variable('X');
+    
+    test.equal(context.resolve(varx), varx);
+    
+    test.ok(context.match(varx, 42));
+    
+    test.equal(context.resolve(varx), 42);
+};
+
