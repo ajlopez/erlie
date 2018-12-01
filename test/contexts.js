@@ -188,6 +188,19 @@ exports['does not match tuples and retract processed variable bindings'] = funct
     test.equal(context.resolve(vary), vary);
 };
 
+exports['does not match tuples and retract processed variable bindings even the nested ones'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    
+    var tuple1 = tuples.tuple([ tuples.tuple([ varx ]), varx ]);
+    var tuple2 = tuples.tuple([ tuples.tuple([ 42 ]), 1 ]);
+    
+    test.ok(!context.match(tuple1, tuple2));
+    
+    test.equal(context.resolve(varx), varx);
+};
+
 exports['does not match two tuples with different sizes'] = function (test) {
     var context = contexts.context();
     
