@@ -107,3 +107,25 @@ exports['multiply expression using variables'] = function (test) {
     
     test.strictEqual(expr.evaluate(context), 42);
 };
+
+exports['divide expression using constants'] = function (test) {
+    var context = contexts.context();
+    
+    var expr = x.divide(x.constant(84), x.constant(2));
+    
+    test.strictEqual(expr.evaluate(context), 42);
+};
+
+exports['divide expression using variables'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    context.bind(varx, 84);
+    context.bind(vary, 2);
+    
+    var expr = x.divide(varx, vary);
+    
+    test.strictEqual(expr.evaluate(context), 42);
+};
