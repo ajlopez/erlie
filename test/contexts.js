@@ -26,6 +26,19 @@ exports['bind and resolve variable using integer value'] = function (test) {
     test.equal(context.resolve(varx), 42);
 };
 
+exports['bind and resolve variable using variable and integer value'] = function (test) {
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    var context = contexts.context();
+    
+    context.bind(varx, vary);
+    context.bind(vary, 42);
+    
+    test.equal(context.resolve(varx), 42);
+    test.equal(context.resolve(vary), 42);
+};
+
 exports['cannot bind a variable twice'] = function (test) {
     var varx = variables.variable('X');
     var context = contexts.context();
