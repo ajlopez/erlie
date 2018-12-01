@@ -28,3 +28,17 @@ exports['variable expression'] = function (test) {
     test.ok(variables.isVariable(result));
     test.ok(result.equals(variables.variable('X')));
 };
+
+exports['match expression'] = function (test) {
+    var lexpr = x.variable('X');
+    var rexpr = x.constant(42);
+    
+    var context = contexts.context();
+    
+    var expr = x.match(lexpr, rexpr);
+    
+    test.strictEqual(expr.evaluate(context), true);
+    
+    test.equal(context.resolve(variables.variable('X')), 42);
+};
+
