@@ -80,3 +80,25 @@ exports['match unbound variable'] = function (test) {
     test.equal(context.resolve(varx), 42);
 };
 
+exports['match unbound variable to integer value'] = function (test) {
+    var context = contexts.context();
+    var varx = variables.variable('X');
+    
+    test.equal(context.resolve(varx), varx);
+    
+    test.ok(context.match(varx, 42));
+    
+    test.equal(context.resolve(varx), 42);
+};
+
+exports['match unbound variable to another variable'] = function (test) {
+    var context = contexts.context();
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    test.equal(context.resolve(varx), varx);
+    
+    test.ok(context.match(varx, vary));
+    
+    test.equal(context.resolve(varx), vary);
+};
