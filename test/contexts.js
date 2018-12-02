@@ -278,3 +278,33 @@ exports['does not match arrays with variables'] = function (test) {
     test.equal(context.resolve(vary), vary);
 };
 
+exports['bind variable in child context'] = function (test) {
+    var parent = contexts.context();
+    var context = contexts.context(parent);
+    
+    test.ok(context.parent());
+    test.strictEqual(context.parent(), parent);
+    
+    var varx = variables.variable('X');
+    
+    context.bind(varx, 42);
+    
+    test.strictEqual(context.resolve(varx), 42);
+    test.strictEqual(parent.resolve(varx), varx);
+};
+
+exports['bind variable in parent context'] = function (test) {
+    var parent = contexts.context();
+    var context = contexts.context(parent);
+    
+    test.ok(context.parent());
+    test.strictEqual(context.parent(), parent);
+    
+    var varx = variables.variable('X');
+    
+    parent.bind(varx, 42);
+    
+    test.strictEqual(context.resolve(varx), 42);
+    test.strictEqual(parent.resolve(varx), 42);
+};
+
