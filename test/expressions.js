@@ -177,3 +177,56 @@ exports['when expression no match'] = function (test) {
     
     test.strictEqual(context.resolve(varx), varx);
 };
+
+exports['function with no argument'] = function (test) {
+    var context = contexts.context();
+
+    var expr = x.function([], x.constant(42));
+    test.equal(expr.arity(), 0);
+    
+    test.strictEqual(expr.evaluate(context, []), 42);
+};
+
+exports['function with one argument'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    
+    var expr = x.function([ varx ], varx );
+    test.equal(expr.arity(), 1);
+    
+    test.strictEqual(expr.evaluate(context, [ 42 ]), 42);
+    
+    test.strictEqual(context.resolve(varx), varx);
+};
+
+exports['function with two arguments'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    var expr = x.function([ varx, vary ], x.multiply(varx, vary) );
+    test.equal(expr.arity(), 2);
+    
+    test.strictEqual(expr.evaluate(context, [ 21, 2 ]), 42);
+    
+    test.strictEqual(context.resolve(varx), varx);
+    test.strictEqual(context.resolve(vary), vary);
+};
+
+exports['function no match'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    var expr = x.function([ varx, vary ], x.multiply(varx, vary) );
+    test.equal(expr.arity(), 2);
+    
+    test.strictEqual(expr.evaluate(context, [ 42 ]), x.NoMatch);
+    
+    test.strictEqual(context.resolve(varx), varx);
+    test.strictEqual(context.resolve(vary), vary);
+};
+
