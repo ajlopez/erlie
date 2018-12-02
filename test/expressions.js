@@ -129,3 +129,27 @@ exports['divide expression using variables'] = function (test) {
     
     test.strictEqual(expr.evaluate(context), 42);
 };
+
+exports['composite expression using constants'] = function (test) {
+    var context = contexts.context();
+    
+    var expr = x.composite([ x.constant(1), x.constant(4), x.constant(9) ]);
+    
+    test.strictEqual(expr.evaluate(context), 9);
+};
+
+exports['composite expression using variables'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    var varz = x.variable('Z');
+    
+    context.bind(varx, 1);
+    context.bind(vary, 4);
+    context.bind(varz, 9);
+    
+    var expr = x.composite([ x.constant(1), x.constant(4), x.constant(9) ]);
+    
+    test.strictEqual(expr.evaluate(context), 9);
+};
