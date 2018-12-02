@@ -238,3 +238,17 @@ exports['does not match two tuples with same size and different values'] = funct
     
     test.ok(!context.match(tuple1, tuple2));
 };
+
+exports['match arrays with constants'] = function (test) {
+    var context = contexts.context();
+    
+    test.ok(context.match([], []));
+    test.ok(context.match([ 1 ], [ 1 ]));
+    test.ok(context.match([ 1, 4, 9 ], [ 1, 4, 9 ]));
+    
+    test.ok(!context.match([], 42));
+    test.ok(!context.match([], [ 1 ]));
+    test.ok(!context.match([ 1 ], [ 2 ]));
+    test.ok(!context.match([ 1, 4, 9 ], [ 1, 4, 4 ]));
+};
+
