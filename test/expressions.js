@@ -165,3 +165,15 @@ exports['when expression with simple variable'] = function (test) {
     
     test.strictEqual(context.resolve(varx), 42);
 };
+
+exports['when expression no match'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    
+    var expr = x.when([ x.variable('X') ], x.variable('X'));
+    
+    test.strictEqual(expr.evaluate(context, 42), x.NoMatch);
+    
+    test.strictEqual(context.resolve(varx), varx);
+};
