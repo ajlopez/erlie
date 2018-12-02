@@ -21,3 +21,10 @@ exports['no current module'] = function (test) {
     test.equal(modules.current(), null);
 };
 
+exports['current module'] = function (test) {
+    var module = modules.module('math');
+    
+    modules.current(module);
+    test.strictEqual(modules.current(), modules.module('math'));
+};
+
