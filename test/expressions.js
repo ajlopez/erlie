@@ -153,3 +153,15 @@ exports['composite expression using variables'] = function (test) {
     
     test.strictEqual(expr.evaluate(context), 9);
 };
+
+exports['when expression with simple variable'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    
+    var expr = x.when(x.variable('X'), x.variable('X'));
+    
+    test.strictEqual(expr.evaluate(context, 42), 42);
+    
+    test.strictEqual(context.resolve(varx), 42);
+};
