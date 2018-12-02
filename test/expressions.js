@@ -163,7 +163,7 @@ exports['when expression with simple variable'] = function (test) {
     
     test.strictEqual(expr.evaluate(context, 42), 42);
     
-    test.strictEqual(context.resolve(varx), 42);
+    test.strictEqual(context.resolve(varx), varx);
 };
 
 exports['when expression no match'] = function (test) {
