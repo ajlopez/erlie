@@ -11,7 +11,6 @@ exports['create context'] = function (test) {
     test.equal(typeof context, 'object');
     
     test.equal(context.parent(), null);
-    test.equal(context.module(), null);
     test.equal(context.process(), null);
 };
 
