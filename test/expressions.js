@@ -3,6 +3,7 @@ var x = require('../lib/expressions');
 var contexts = require('../lib/contexts');
 var atoms = require('../lib/atoms');
 var variables = require('../lib/variables');
+var processes = require('../lib/processes');
 
 exports['atom expression'] = function (test) {
     var expr = x.atom('a');
@@ -248,5 +249,25 @@ exports['call expression'] = function (test) {
     test.strictEqual(context.resolve(varx), varx);
     test.strictEqual(context.resolve(vary), vary);
     test.strictEqual(context.resolve(varz), 21);
+};
+
+exports['send expression']  = function (test) {
+    test.async();
+    
+    var process = processes.process();
+    var varx = x.variable('X');
+    
+    var context = contexts.context();
+  
+    context.bind(varx, process);
+    
+    var expr = x.send(varx, x.constant(42));
+    
+    test.strictEqual(expr.evaluate(context), x.Async);
+    
+    process.receive(function (data) {
+        test.strictEqual(data, 42);
+        test.done();
+    });
 };
 
