@@ -3,6 +3,7 @@ var contexts = require('../lib/contexts');
 var atoms = require('../lib/atoms');
 var variables = require('../lib/variables');
 var tuples = require('../lib/tuples');
+var processes = require('../lib/processes');
 
 exports['create context'] = function (test) {
     var context = contexts.context();
@@ -309,5 +310,24 @@ exports['bind variable in parent context'] = function (test) {
     
     test.strictEqual(context.resolve(varx), 42);
     test.strictEqual(parent.resolve(varx), 42);
+};
+
+exports['context with process'] = function (test) {
+    var process = processes.process();
+    
+    var context = contexts.context({ process: process });
+    
+    test.equal(context.parent(), null);
+    test.strictEqual(context.process(), process);
+};
+
+exports['context with parent and process'] = function (test) {
+    var process = processes.process();
+    var parent = contexts.context();
+    
+    var context = contexts.context(parent, { process: process });
+    
+    test.strictEqual(context.parent(), parent);
+    test.strictEqual(context.process(), process);
 };
 
