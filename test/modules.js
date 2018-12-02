@@ -17,3 +17,7 @@ exports['module with name twice'] = function (test) {
     test.strictEqual(module, moduleb);
 };
 
+exports['no current module'] = function (test) {
+    test.equal(modules.current(), null);
+};
+
