@@ -252,3 +252,29 @@ exports['match arrays with constants'] = function (test) {
     test.ok(!context.match([ 1, 4, 9 ], [ 1, 4, 4 ]));
 };
 
+exports['match arrays with variables'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    var varz = variables.variable('Z');
+    
+    test.ok(context.match([ varx, vary, varz ], [ 1, 4, 9 ]));
+
+    test.equal(context.resolve(varx), 1);
+    test.equal(context.resolve(vary), 4);
+    test.equal(context.resolve(varz), 9);
+};
+
+exports['does not match arrays with variables'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    test.ok(!context.match([ varx, vary, varx ], [ 1, 4, 9 ]));
+
+    test.equal(context.resolve(varx), varx);
+    test.equal(context.resolve(vary), vary);
+};
+
