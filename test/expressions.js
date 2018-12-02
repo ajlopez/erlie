@@ -230,3 +230,23 @@ exports['function no match'] = function (test) {
     test.strictEqual(context.resolve(vary), vary);
 };
 
+exports['call expression'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    var varz = x.variable('Z');
+
+    context.bind(varz, 21);
+    
+    var fn = x.function([ varx, vary ], x.multiply(varx, vary) );
+    
+    var expr = x.call(fn, [ varz, 2 ]);
+    
+    test.strictEqual(expr.evaluate(context), 42);
+    
+    test.strictEqual(context.resolve(varx), varx);
+    test.strictEqual(context.resolve(vary), vary);
+    test.strictEqual(context.resolve(varz), 21);
+};
+
