@@ -9,6 +9,10 @@ exports['create context'] = function (test) {
     
     test.ok(context);
     test.equal(typeof context, 'object');
+    
+    test.equal(context.parent(), null);
+    test.equal(context.module(), null);
+    test.equal(context.process(), null);
 };
 
 exports['resolve unbound variable'] = function (test) {
