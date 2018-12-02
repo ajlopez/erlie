@@ -271,3 +271,19 @@ exports['send expression']  = function (test) {
     });
 };
 
+exports['receive expression']  = function (test) {
+    test.async();
+    
+    var process = processes.process();
+    var context = contexts.context({ process: process });
+    
+    process.send(42);
+    
+    var expr = x.receive(function (data) {
+        test.strictEqual(data, 42);
+        test.done();
+    });
+    
+    test.strictEqual(expr.evaluate(context), x.Async);
+};
+
