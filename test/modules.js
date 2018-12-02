@@ -10,3 +10,10 @@ exports['module with name'] = function (test) {
     test.equal(module.name(), 'math');
 };
 
+exports['module with name twice'] = function (test) {
+    var module = modules.module('math');
+    var moduleb = modules.module('math');
+    
+    test.strictEqual(module, moduleb);
+};
+
