@@ -251,6 +251,39 @@ exports['call expression'] = function (test) {
     test.strictEqual(context.resolve(varz), 21);
 };
 
+exports['call expression using native expression'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    var varz = x.variable('Z');
+
+    context.bind(varz, 21);
+    
+    var rcontext;
+    var rargs;
+    
+    function fn(context, args) {
+        rcontext = context;
+        rargs = args;
+        return args[0] * args[1];
+    }
+    
+    var expr = x.call(fn, [ varz, 2 ]);
+    
+    test.strictEqual(expr.evaluate(context), 42);
+    
+    test.strictEqual(rcontext, context);
+    test.ok(rargs);
+    test.equal(rargs.length, 2);
+    test.equal(rargs[0], 21);
+    test.equal(rargs[1], 2);
+    
+    test.strictEqual(context.resolve(varx), varx);
+    test.strictEqual(context.resolve(vary), vary);
+    test.strictEqual(context.resolve(varz), 21);
+};
+
 exports['send expression']  = function (test) {
     test.async();
     
