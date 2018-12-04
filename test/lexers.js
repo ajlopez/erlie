@@ -17,4 +17,24 @@ exports['first token'] = function (test) {
     test.ok(token);
     test.equal(token.value, 'foo');
     test.equal(token.type, TokenType.Name);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
+exports['no token in empty string'] = function (test) {
+    var lexer = lexers.lexer('');
+    
+    test.equal(lexer.nextToken(), null);
+};
+
+exports['name skipping spaces'] = function (test) {
+    var lexer = lexers.lexer('  foo   ');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'foo');
+    test.equal(token.type, TokenType.Name);
+    
+    test.equal(lexer.nextToken(), null);
 };
