@@ -57,3 +57,15 @@ exports['two names'] = function (test) {
     test.equal(lexer.nextToken(), null);
 };
 
+exports['number'] = function (test) {
+    var lexer = lexers.lexer('42');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, '42');
+    test.equal(token.type, TokenType.Number);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
