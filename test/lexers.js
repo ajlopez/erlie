@@ -38,3 +38,22 @@ exports['name skipping spaces'] = function (test) {
     
     test.equal(lexer.nextToken(), null);
 };
+
+exports['two names'] = function (test) {
+    var lexer = lexers.lexer('foo bar');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'foo');
+    test.equal(token.type, TokenType.Name);
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'bar');
+    test.equal(token.type, TokenType.Name);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
