@@ -93,3 +93,21 @@ exports['comma as delimiter'] = function (test) {
     test.equal(lexer.nextToken(), null);
 };
 
+exports['name and delimiter'] = function (test) {
+    var lexer = lexers.lexer('foo;');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'foo');
+    test.equal(token.type, TokenType.Name);
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, ';');
+    test.equal(token.type, TokenType.Delimiter);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
