@@ -111,3 +111,38 @@ exports['name and delimiter'] = function (test) {
     test.equal(lexer.nextToken(), null);
 };
 
+exports['name starting with underscore'] = function (test) {
+    var lexer = lexers.lexer('_foo');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, '_foo');
+    test.equal(token.type, TokenType.Name);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
+exports['name having underscore'] = function (test) {
+    var lexer = lexers.lexer('foo_bar');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'foo_bar');
+    test.equal(token.type, TokenType.Name);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
+exports['name having underscore and digits'] = function (test) {
+    var lexer = lexers.lexer('foo_42');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'foo_42');
+    test.equal(token.type, TokenType.Name);
+    
+    test.equal(lexer.nextToken(), null);
+};
