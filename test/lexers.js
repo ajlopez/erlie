@@ -146,3 +146,15 @@ exports['name having underscore and digits'] = function (test) {
     
     test.equal(lexer.nextToken(), null);
 };
+
+exports['name with at'] = function (test) {
+    var lexer = lexers.lexer('foo@bar');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'foo@bar');
+    test.equal(token.type, TokenType.Name);
+    
+    test.equal(lexer.nextToken(), null);
+};
