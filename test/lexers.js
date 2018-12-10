@@ -213,3 +213,18 @@ exports['+ as operator'] = function (test) {
     
     test.equal(lexer.nextToken(), null);
 };
+
+exports['arithmetic operators'] = function (test) {
+    var operators = '+-*/';
+    var lexer = lexers.lexer(operators);
+  
+    for (var k = 0; k < operators.length; k++) {            
+        var token = lexer.nextToken();
+        
+        test.ok(token);
+        test.equal(token.value, operators[k]);
+        test.equal(token.type, TokenType.Operator);
+    }
+    
+    test.equal(lexer.nextToken(), null);
+};
