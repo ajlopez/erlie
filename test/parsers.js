@@ -17,3 +17,12 @@ exports['parse integer constant'] = function (test) {
     test.equal(result.evaluate(), 42);
 };
 
+exports['parse atom'] = function (test) {
+    var parser = parsers.parser('foo');
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.strictEqual(result.evaluate(), result);
+};
+
