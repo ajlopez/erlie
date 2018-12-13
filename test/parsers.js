@@ -30,10 +30,25 @@ exports['parse atom'] = function (test) {
     test.ok(atoms.isAtom(result));
 };
 
-exports['parse variable'] = function (test) {
+exports['parse variable starting with uppercase letter'] = function (test) {
     var parser = parsers.parser('X');
     var context = contexts.context();
     var varx = variables.variable('X');
+    
+    context.bind(varx, 42);
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.strictEqual(result.evaluate(context), 42);
+    test.ok(variables.isVariable(result));
+    test.ok(result.equals(varx));
+};
+
+exports['parse variable starting with underscore'] = function (test) {
+    var parser = parsers.parser('_X');
+    var context = contexts.context();
+    var varx = variables.variable('_X');
     
     context.bind(varx, 42);
     
