@@ -72,3 +72,17 @@ exports['parse anonymous variable'] = function (test) {
     test.ok(variables.isVariable(result));
     test.ok(result.equals(avar));
 };
+
+exports['parse quoted atom'] = function (test) {
+    var parser = parsers.parser("'X'");
+    var context = contexts.context();
+    var xatom = atoms.atom('X');
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.ok(result.evaluate(context).equals(xatom));
+    test.ok(atoms.isAtom(result));
+    test.ok(result.equals(xatom));
+};
+
