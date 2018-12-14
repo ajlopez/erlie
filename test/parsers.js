@@ -60,3 +60,15 @@ exports['parse variable starting with underscore'] = function (test) {
     test.ok(result.equals(varx));
 };
 
+exports['parse anonymous variable'] = function (test) {
+    var parser = parsers.parser('_');
+    var context = contexts.context();
+    var avar = variables.variable('_');
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.ok(result.evaluate(context).equals(avar));
+    test.ok(variables.isVariable(result));
+    test.ok(result.equals(avar));
+};
