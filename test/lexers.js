@@ -123,6 +123,18 @@ exports['parentheses as delimiters'] = function (test) {
     test.equal(lexer.nextToken(), null);
 };
 
+exports['dot as delimiter'] = function (test) {
+    var lexer = lexers.lexer('.');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, '.');
+    test.equal(token.type, TokenType.Delimiter);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
 exports['name and delimiter'] = function (test) {
     var lexer = lexers.lexer('foo;');
   
