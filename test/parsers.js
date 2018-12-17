@@ -96,3 +96,12 @@ exports['parse add integers'] = function (test) {
     test.equal(result.evaluate(context), 42);
 };
 
+exports['parse subtract integers'] = function (test) {
+    var parser = parsers.parser("44 - 2");
+    var context = contexts.context();
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.equal(result.evaluate(context), 42);
+};
