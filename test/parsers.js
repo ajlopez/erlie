@@ -86,3 +86,13 @@ exports['parse quoted atom'] = function (test) {
     test.ok(result.equals(xatom));
 };
 
+exports['parse add integers'] = function (test) {
+    var parser = parsers.parser("2 + 40");
+    var context = contexts.context();
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.equal(result.evaluate(context), 42);
+};
+
