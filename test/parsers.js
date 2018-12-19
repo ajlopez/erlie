@@ -115,3 +115,13 @@ exports['parse multiply integers'] = function (test) {
     test.ok(result);
     test.equal(result.evaluate(context), 42);
 };
+
+exports['parse divide integers'] = function (test) {
+    var parser = parsers.parser("84 / 2");
+    var context = contexts.context();
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.equal(result.evaluate(context), 42);
+};
