@@ -153,6 +153,28 @@ exports['div expression using variables'] = function (test) {
     test.strictEqual(expr.evaluate(context), 16);
 };
 
+exports['rem expression using constants'] = function (test) {
+    var context = contexts.context();
+    
+    var expr = x.rem(x.constant(84), x.constant(5));
+    
+    test.strictEqual(expr.evaluate(context), 4);
+};
+
+exports['rem expression using variables'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    context.bind(varx, 84);
+    context.bind(vary, 5);
+    
+    var expr = x.rem(varx, vary);
+    
+    test.strictEqual(expr.evaluate(context), 4);
+};
+
 exports['composite expression using constants'] = function (test) {
     var context = contexts.context();
     
