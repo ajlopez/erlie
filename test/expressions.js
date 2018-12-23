@@ -65,6 +65,48 @@ exports['add expression using variables'] = function (test) {
     test.strictEqual(expr.evaluate(context), 42);
 };
 
+exports['add expression using unbound left variable'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    context.bind(vary, 2);
+
+    var expr = x.add(varx, vary);
+
+    try {
+        expr.evaluate(context);
+    }
+    catch (ex) {
+        test.equal(ex, "Error: variable 'X' is unbound");
+        return;
+    }
+    
+    test.fail();
+};
+
+exports['add expression using unbound right variable'] = function (test) {
+    var context = contexts.context();
+    
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    
+    context.bind(varx, 40);
+
+    var expr = x.add(varx, vary);
+
+    try {
+        expr.evaluate(context);
+    }
+    catch (ex) {
+        test.equal(ex, "Error: variable 'Y' is unbound");
+        return;
+    }
+    
+    test.fail();
+};
+
 exports['subtract expression using constants'] = function (test) {
     var context = contexts.context();
     
