@@ -277,3 +277,22 @@ exports['div and rem as operators'] = function (test) {
     
     test.equal(lexer.nextToken(), null);
 };
+
+exports['bor and band as operators'] = function (test) {
+    var operators = 'bor band';
+    var lexer = lexers.lexer(operators);
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'bor');
+    test.equal(token.type, TokenType.Operator);
+    
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, 'band');
+    test.equal(token.type, TokenType.Operator);
+    
+    test.equal(lexer.nextToken(), null);
+};
