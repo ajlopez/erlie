@@ -145,3 +145,15 @@ exports['parse simple expression in parentheses'] = function (test) {
     test.equal(result.evaluate(context), 42);
 };
 
+exports['parse match expression'] = function (test) {
+    var parser = parsers.parser("X = 42");
+    var context = contexts.context();
+    var varx = variables.variable('X');
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.equal(result.evaluate(context), true);
+    test.equal(context.resolve(varx), 42);
+};
+
