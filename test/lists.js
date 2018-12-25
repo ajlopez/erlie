@@ -8,3 +8,9 @@ exports['create list'] = function (test) {
     test.equal(typeof list, 'object');
 };
 
+exports['get head'] = function (test) {
+    var list = lists.list(42);
+    
+    test.equal(list.head(), 42);
+};
+
