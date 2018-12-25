@@ -17,6 +17,12 @@ exports['get head'] = function (test) {
     test.equal(list.head(), 42);
 };
 
+exports['get empty tail'] = function (test) {
+    var list = lists.list(42);
+    
+    test.strictEqual(list.tail(), null);
+};
+
 exports['is list'] = function (test) {
     var list1 = lists.list(42);
     var list2 = lists.list(1, lists.list(2));
