@@ -23,6 +23,28 @@ exports['get empty tail'] = function (test) {
     test.strictEqual(list.tail(), null);
 };
 
+exports['equals'] = function (test) {
+    var list1 = lists.list(42);
+    var list2 = lists.list(42);
+    var list3 = lists.list(1, lists.list(2));
+    var list4 = lists.list(1, lists.list(2));
+    var list5 = lists.list(lists.list(42));
+    var list6 = lists.list(lists.list(42));
+    
+    test.ok(list1.equals(list1));
+    test.ok(list1.equals(list2));
+    test.ok(list2.equals(list1));
+    test.ok(list3.equals(list3));
+    test.ok(list3.equals(list4));
+    test.ok(list4.equals(list3));
+    test.ok(list5.equals(list5));
+    test.ok(list5.equals(list6));
+    test.ok(list6.equals(list5));
+
+    test.ok(!list1.equals(42));
+    test.ok(!list1.equals("foo"));
+};
+
 exports['is list'] = function (test) {
     var list1 = lists.list(42);
     var list2 = lists.list(1, lists.list(2));
