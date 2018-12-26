@@ -60,3 +60,11 @@ exports['is list'] = function (test) {
     test.ok(!lists.isList(tuples.tuple([1, 2, 3])));
 };
 
+exports['empty list'] = function (test) {
+    var result = lists.empty();
+    
+    test.ok(result);
+    test.ok(lists.isList(result));
+    test.ok(result.isEmpty());
+};
+
