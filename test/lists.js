@@ -23,6 +23,12 @@ exports['get empty tail'] = function (test) {
     test.strictEqual(list.tail(), null);
 };
 
+exports['is not empty list'] = function (test) {
+    var list = lists.list(42);
+    
+    test.ok(!list.isEmpty());
+};
+
 exports['equals'] = function (test) {
     var list1 = lists.list(42);
     var list2 = lists.list(42);
