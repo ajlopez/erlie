@@ -95,3 +95,20 @@ exports['evaluate tuple with three bound variables'] = function (test) {
     test.equal(result.element(2), 9);
 };
 
+exports['equals'] = function (test) {
+    test.ok(tuples.tuple([]).equals(tuples.tuple([])));
+    test.ok(tuples.tuple([42]).equals(tuples.tuple([42])));
+    test.ok(tuples.tuple([1, 2, 3]).equals(tuples.tuple([1, 2, 3])));
+    test.ok(tuples.tuple([tuples.tuple([1]), tuples.tuple([2]), tuples.tuple([3])]).equals(tuples.tuple([tuples.tuple([1]), tuples.tuple([2]), tuples.tuple([3])])));
+
+    test.ok(!tuples.tuple([]).equals(tuples.tuple([1])));
+    test.ok(!tuples.tuple([42]).equals(tuples.tuple([1])));
+    test.ok(!tuples.tuple([1, 2, 3]).equals(tuples.tuple([1, 2, 3, 4])));
+    test.ok(!tuples.tuple([tuples.tuple([1]), tuples.tuple([2]), tuples.tuple([3])]).equals(tuples.tuple([tuples.tuple([1]), tuples.tuple([2]), tuples.tuple([4])])));
+
+    test.ok(!tuples.tuple([]).equals(null));
+    test.ok(!tuples.tuple([]).equals(42));
+    test.ok(!tuples.tuple([]).equals("foo"));
+    test.ok(!tuples.tuple([]).equals(variables.variable('X')));
+};
+
