@@ -3,6 +3,7 @@ var contexts = require('../lib/contexts');
 var atoms = require('../lib/atoms');
 var variables = require('../lib/variables');
 var tuples = require('../lib/tuples');
+var lists = require('../lib/lists');
 var processes = require('../lib/processes');
 
 exports['create context'] = function (test) {
@@ -331,3 +332,104 @@ exports['context with parent and process'] = function (test) {
     test.strictEqual(context.process(), process);
 };
 
+exports['match two lists with constant values'] = function (test) {
+    var context = contexts.context();
+    
+    var list1 = lists.list(1, lists.list(4, lists.list(9)));
+    var list2 = lists.list(1, lists.list(4, lists.list(9)));
+    
+    test.ok(context.match(list1, list2));
+};
+
+exports['match list with variables with list with constant values'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    var varz = variables.variable('Z');
+    
+    var list1 = lists.list(varx, lists.list(vary, lists.list(varz)));
+    var list2 = lists.list(1, lists.list(4, lists.list(9)));
+    
+    test.ok(context.match(list1, list2));
+    
+    test.equal(context.resolve(varx), 1);
+    test.equal(context.resolve(vary), 4);
+    test.equal(context.resolve(varz), 9);
+};
+
+exports['match list with repeated variable with list with constant values'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    var list1 = lists.list(varx, lists.list(vary, lists.list(vary)));
+    var list2 = lists.list(1, lists.list(4, lists.list(4)));
+    
+    test.ok(context.match(list1, list2));
+    
+    test.equal(context.resolve(varx), 1);
+    test.equal(context.resolve(vary), 4);
+};
+
+exports['match lists with interchanged variables'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    var list1 = lists.list(varx, lists.list(vary, lists.list(varx)));
+    var list2 = lists.list(vary, lists.list(varx, lists.list(42)));
+    
+    test.ok(context.match(list1, list2));
+    
+    test.equal(context.resolve(varx), 42);
+    test.equal(context.resolve(vary), 42);
+};
+
+exports['does not match lists and retract processed variable bindings'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    var vary = variables.variable('Y');
+    
+    var list1 = lists.list(varx, lists.list(vary, lists.list(varx, lists.list(vary))));
+    var list2 = lists.list(vary, lists.list(varx, lists.list(42, lists.list(43))));
+    
+    test.ok(!context.match(list1, list2));
+    
+    test.equal(context.resolve(varx), varx);
+    test.equal(context.resolve(vary), vary);
+};
+
+exports['does not match lists and retract processed variable bindings even the nested ones'] = function (test) {
+    var context = contexts.context();
+
+    var varx = variables.variable('X');
+    
+    var list1 = lists.list(lists.list(varx), lists.list(varx));
+    var list2 = lists.list(lists.list(42), lists.list(1));
+    
+    test.ok(!context.match(list1, list2));
+    
+    test.equal(context.resolve(varx), varx);
+};
+
+exports['does not match two lists with different sizes'] = function (test) {
+    var context = contexts.context();
+    
+    var list1 = lists.list(1, lists.list(4, lists.list(9)));
+    var list2 = lists.list(1, lists.list(4));
+    
+    test.ok(!context.match(list1, list2));
+};
+
+exports['does not match two lists with same size and different values'] = function (test) {
+    var context = contexts.context();
+    
+    var list1 = lists.list(1, lists.list(4, lists.list(9)));
+    var list2 = lists.list(1, lists.list(2, lists.list(3)));
+    
+    test.ok(!context.match(list1, list2));
+};
