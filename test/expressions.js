@@ -3,6 +3,7 @@ var x = require('../lib/expressions');
 var contexts = require('../lib/contexts');
 var atoms = require('../lib/atoms');
 var variables = require('../lib/variables');
+var tuples = require('../lib/tuples');
 var processes = require('../lib/processes');
 
 exports['atom expression'] = function (test) {
@@ -236,9 +237,39 @@ exports['composite expression using variables'] = function (test) {
     context.bind(vary, 4);
     context.bind(varz, 9);
     
-    var expr = x.composite([ x.constant(1), x.constant(4), x.constant(9) ]);
+    var expr = x.composite([ varx, vary, varz ]);
     
     test.strictEqual(expr.evaluate(context), 9);
+};
+
+exports['tuple expression using constants'] = function (test) {
+    var context = contexts.context();
+    
+    var expr = x.tuple([ x.constant(1), x.constant(4), x.constant(9) ]);
+    var result = expr.evaluate(context);
+    
+    test.ok(result);
+    test.ok(tuples.tuple(result));
+    test.ok(result.equals(tuples.tuple([1, 4, 9])));
+};
+
+exports['tuple expression using variables'] = function (test) {
+    var context = contexts.context();
+
+    var varx = x.variable('X');
+    var vary = x.variable('Y');
+    var varz = x.variable('Z');
+    
+    context.bind(varx, 1);
+    context.bind(vary, 4);
+    context.bind(varz, 9);
+    
+    var expr = x.tuple([ varx, vary, varz ]);
+    var result = expr.evaluate(context);
+    
+    test.ok(result);
+    test.ok(tuples.tuple(result));
+    test.ok(result.equals(tuples.tuple([1, 4, 9])));
 };
 
 exports['when expression with simple variable'] = function (test) {
