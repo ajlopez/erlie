@@ -165,6 +165,6 @@ exports['parse empty tuple expression'] = function (test) {
     var result = parser.parse();
     
     test.ok(result);
-    test.equal(tuples.isTuple(result.evaluate(context)));
+    test.ok(tuples.isTuple(result.evaluate(context)));
 };
 
