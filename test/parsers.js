@@ -3,6 +3,7 @@ var parsers = require('../lib/parsers');
 var contexts = require('../lib/contexts');
 var atoms = require('../lib/atoms');
 var variables = require('../lib/variables');
+var tuples = require('../lib/tuples');
 
 exports['create parser as object'] = function (test) {
     var parser = parsers.parser('foo');
@@ -155,5 +156,15 @@ exports['parse match expression'] = function (test) {
     test.ok(result);
     test.equal(result.evaluate(context), true);
     test.equal(context.resolve(varx), 42);
+};
+
+exports['parse empty tuple expression'] = function (test) {
+    var parser = parsers.parser("{}");
+    var context = contexts.context();
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    test.equal(tuples.isTuple(result.evaluate(context)));
 };
 
