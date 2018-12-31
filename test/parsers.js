@@ -168,3 +168,33 @@ exports['parse empty tuple expression'] = function (test) {
     test.ok(tuples.isTuple(result.evaluate(context)));
 };
 
+exports['parse empty tuple expression'] = function (test) {
+    var parser = parsers.parser("{}");
+    var context = contexts.context();
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+    
+    var tuple = result.evaluate(context);
+    
+    test.ok(tuple);
+    test.ok(tuples.isTuple(tuple));
+    test.equal(tuple.size(), 0);
+};
+
+exports['parse tuple expression'] = function (test) {
+    var parser = parsers.parser("{ 1, 4, 9 }");
+    var context = contexts.context();
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+
+    var tuple = result.evaluate(context);
+    
+    test.ok(tuple);
+    test.ok(tuples.isTuple(tuple));
+    test.equal(tuple.size(), 3);
+    test.ok(tuple.equals(tuples.tuple([1, 4, 9])));
+};
