@@ -4,6 +4,7 @@ var contexts = require('../lib/contexts');
 var atoms = require('../lib/atoms');
 var variables = require('../lib/variables');
 var tuples = require('../lib/tuples');
+var lists = require('../lib/lists');
 
 exports['create parser as object'] = function (test) {
     var parser = parsers.parser('foo');
@@ -183,18 +184,18 @@ exports['parse empty tuple expression'] = function (test) {
     test.equal(tuple.size(), 0);
 };
 
-exports['parse tuple expression'] = function (test) {
-    var parser = parsers.parser("{ 1, 4, 9 }");
+exports['parse list expression'] = function (test) {
+    var parser = parsers.parser("[]");
     var context = contexts.context();
     
     var result = parser.parse();
     
     test.ok(result);
 
-    var tuple = result.evaluate(context);
+    var list = result.evaluate(context);
     
-    test.ok(tuple);
-    test.ok(tuples.isTuple(tuple));
-    test.equal(tuple.size(), 3);
-    test.ok(tuple.equals(tuples.tuple([1, 4, 9])));
+    test.ok(list);
+    test.ok(lists.isList(list));
+    test.ok(list.isEmpty());
 };
+
