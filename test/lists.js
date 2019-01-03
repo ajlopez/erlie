@@ -11,6 +11,21 @@ exports['create list'] = function (test) {
     test.equal(typeof list, 'object');
 };
 
+exports['create list from values'] = function (test) {
+    var list = lists.fromValues([1, 4, 9]);
+    
+    test.ok(list);
+    test.ok(lists.list(1, lists.list(4, lists.list(9))).equals(list));
+};
+
+exports['create empty list from values'] = function (test) {
+    var list = lists.fromValues([]);
+    
+    test.ok(list);
+    test.ok(lists.isList(list));
+    test.ok(list.isEmpty());
+};
+
 exports['get head'] = function (test) {
     var list = lists.list(42);
     
