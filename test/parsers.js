@@ -184,7 +184,7 @@ exports['parse empty tuple expression'] = function (test) {
     test.equal(tuple.size(), 0);
 };
 
-exports['parse list expression'] = function (test) {
+exports['parse empty list expression'] = function (test) {
     var parser = parsers.parser("[]");
     var context = contexts.context();
     
@@ -197,5 +197,21 @@ exports['parse list expression'] = function (test) {
     test.ok(list);
     test.ok(lists.isList(list));
     test.ok(list.isEmpty());
+};
+
+exports['parse list expression'] = function (test) {
+    var parser = parsers.parser("[1, 4, 9]");
+    var context = contexts.context();
+    
+    var result = parser.parse();
+    
+    test.ok(result);
+
+    var list = result.evaluate(context);
+    
+    test.ok(list);
+    test.ok(lists.isList(list));
+    test.ok(!list.isEmpty());
+    test.ok(list.equals(lists.fromValues([1, 4, 9])));
 };
 
