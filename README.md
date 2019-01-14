@@ -5,6 +5,7 @@ Erlang-like interpreter in JavaScript. WIP.
 ## References
 
 - [Erlang Expressions](http://erlang.org/doc/reference_manual/expressions.html)
+- [Getting starting with Erlang](http://erlang.org/download/getting_started-5.4.pdf)
 
 ## Contribution
 

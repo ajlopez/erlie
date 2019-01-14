@@ -105,6 +105,18 @@ exports['vertical bar as delimiter'] = function (test) {
     test.equal(lexer.nextToken(), null);
 };
 
+exports['colon as delimiter'] = function (test) {
+    var lexer = lexers.lexer(':');
+  
+    var token = lexer.nextToken();
+    
+    test.ok(token);
+    test.equal(token.value, ':');
+    test.equal(token.type, TokenType.Delimiter);
+    
+    test.equal(lexer.nextToken(), null);
+};
+
 exports['comma as delimiter'] = function (test) {
     var lexer = lexers.lexer(',');
   
