@@ -179,8 +179,8 @@ exports['parse empty tuple expression'] = function (test) {
     test.ok(tuples.isTuple(result.evaluate(context)));
 };
 
-exports['parse empty tuple expression'] = function (test) {
-    var parser = parsers.parser("{}");
+exports['parse tuple expression'] = function (test) {
+    var parser = parsers.parser("{ foo, bar }");
     var context = contexts.context();
     
     var result = parser.parse();
@@ -191,7 +191,13 @@ exports['parse empty tuple expression'] = function (test) {
     
     test.ok(tuple);
     test.ok(tuples.isTuple(tuple));
-    test.equal(tuple.size(), 0);
+    test.equal(tuple.size(), 2);
+    
+    test.ok(atoms.isAtom(tuple.element(0)));
+    test.ok(atoms.isAtom(tuple.element(1)));
+    
+    test.equal(tuple.element(0).name(), 'foo');
+    test.equal(tuple.element(1).name(), 'bar');
 };
 
 exports['parse empty list expression'] = function (test) {
