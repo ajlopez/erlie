@@ -16,6 +16,24 @@ exports['create context'] = function (test) {
     test.equal(context.process(), null);
 };
 
+exports['define function with name and arity'] = function (test) {
+    var context = contexts.context();
+    var fn = Math.sin;
+    
+    context.fun('sin', 1, fn);
+    
+    var result = context.fun('sin', 1);
+    
+    test.ok(result);
+    test.equal(result, fn);
+};
+
+exports['get undefined function'] = function (test) {
+    var context = contexts.context();
+    
+    test.equal(context.fun('sin', 1), null);
+};
+
 exports['resolve unbound variable'] = function (test) {
     var varx = variables.variable('X');
     var context = contexts.context();
