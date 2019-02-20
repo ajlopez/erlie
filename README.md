@@ -6,6 +6,7 @@ Erlang-like interpreter in JavaScript. WIP.
 
 - [Erlang Expressions](http://erlang.org/doc/reference_manual/expressions.html)
 - [Getting starting with Erlang](http://erlang.org/download/getting_started-5.4.pdf)
+- [OTP Design Principles](http://erlang.org/doc/design_principles/des_princ.html)
 
 ## Contribution
 
