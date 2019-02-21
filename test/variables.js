@@ -1,29 +1,29 @@
 
-var variables = require('../lib/variables');
-var atoms = require('../lib/atoms');
-var contexts = require('../lib/contexts');
+const variables = require('../lib/variables');
+const atoms = require('../lib/atoms');
+const contexts = require('../lib/contexts');
 
 exports['create variable'] = function (test) {
-    var variable = variables.variable('Foo');
+    const variable = variables.variable('Foo');
     
     test.ok(variable);
     test.strictEqual(typeof variable, 'object');
 };
 
 exports['variable to string'] = function (test) {
-    var variable = variables.variable('Foo');
+    const variable = variables.variable('Foo');
     
     test.strictEqual(variable.toString(), 'Foo');
 };
 
 exports['variable name'] = function (test) {
-    var variable = variables.variable('Foo');
+    const variable = variables.variable('Foo');
     
     test.strictEqual(variable.name(), 'Foo');
 };
 
 exports['is variable'] = function (test) {
-    var variable = variables.variable('Foo');
+    const variable = variables.variable('Foo');
 
     test.ok(variables.isVariable(variable));
     test.ok(!variables.isVariable(null));
@@ -34,15 +34,15 @@ exports['is variable'] = function (test) {
 };
 
 exports['evaluate unbound variable to itself'] = function (test) {
-    var variable = variables.variable('X');
-    var context = contexts.context();
+    const variable = variables.variable('X');
+    const context = contexts.context();
     
     test.equal(variable.evaluate(context), variable);
 };
 
 exports['evaluate bound variable'] = function (test) {
-    var variable = variables.variable('X');
-    var context = contexts.context();
+    const variable = variables.variable('X');
+    const context = contexts.context();
     
     context.bind(variable, 42);
     

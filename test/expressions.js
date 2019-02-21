@@ -1,17 +1,17 @@
 
-var x = require('../lib/expressions');
-var contexts = require('../lib/contexts');
-var atoms = require('../lib/atoms');
-var variables = require('../lib/variables');
-var tuples = require('../lib/tuples');
-var processes = require('../lib/processes');
+const x = require('../lib/expressions');
+const contexts = require('../lib/contexts');
+const atoms = require('../lib/atoms');
+const variables = require('../lib/variables');
+const tuples = require('../lib/tuples');
+const processes = require('../lib/processes');
 
 exports['atom expression'] = function (test) {
-    var expr = x.atom('a');
+    const expr = x.atom('a');
     
     test.ok(expr);
     
-    var result = expr.evaluate(null);
+    const result = expr.evaluate(null);
     
     test.ok(result);
     test.ok(atoms.isAtom(result));
@@ -19,12 +19,12 @@ exports['atom expression'] = function (test) {
 };
 
 exports['variable expression'] = function (test) {
-    var expr = x.variable('X');
-    var context = contexts.context();
+    const expr = x.variable('X');
+    const context = contexts.context();
   
     test.ok(expr);
     
-    var result = expr.evaluate(context);
+    const result = expr.evaluate(context);
     
     test.ok(result);
     test.ok(variables.isVariable(result));
@@ -32,12 +32,12 @@ exports['variable expression'] = function (test) {
 };
 
 exports['match expression'] = function (test) {
-    var lexpr = x.variable('X');
-    var rexpr = x.constant(42);
+    const lexpr = x.variable('X');
+    const rexpr = x.constant(42);
     
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.match(lexpr, rexpr);
+    const expr = x.match(lexpr, rexpr);
     
     test.strictEqual(expr.evaluate(context), true);
     
@@ -45,36 +45,36 @@ exports['match expression'] = function (test) {
 };
 
 exports['add expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.add(x.constant(40), x.constant(2));
+    const expr = x.add(x.constant(40), x.constant(2));
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['add expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(varx, 40);
     context.bind(vary, 2);
     
-    var expr = x.add(varx, vary);
+    const expr = x.add(varx, vary);
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['add expression using unbound left variable'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(vary, 2);
 
-    var expr = x.add(varx, vary);
+    const expr = x.add(varx, vary);
 
     try {
         expr.evaluate(context);
@@ -88,14 +88,14 @@ exports['add expression using unbound left variable'] = function (test) {
 };
 
 exports['add expression using unbound right variable'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(varx, 40);
 
-    var expr = x.add(varx, vary);
+    const expr = x.add(varx, vary);
 
     try {
         expr.evaluate(context);
@@ -109,144 +109,144 @@ exports['add expression using unbound right variable'] = function (test) {
 };
 
 exports['subtract expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.subtract(x.constant(44), x.constant(2));
+    const expr = x.subtract(x.constant(44), x.constant(2));
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['subtract expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(varx, 44);
     context.bind(vary, 2);
     
-    var expr = x.subtract(varx, vary);
+    const expr = x.subtract(varx, vary);
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['multiply expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.multiply(x.constant(21), x.constant(2));
+    const expr = x.multiply(x.constant(21), x.constant(2));
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['multiply expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(varx, 21);
     context.bind(vary, 2);
     
-    var expr = x.multiply(varx, vary);
+    const expr = x.multiply(varx, vary);
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['divide expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.divide(x.constant(84), x.constant(2));
+    const expr = x.divide(x.constant(84), x.constant(2));
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['divide expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(varx, 84);
     context.bind(vary, 2);
     
-    var expr = x.divide(varx, vary);
+    const expr = x.divide(varx, vary);
     
     test.strictEqual(expr.evaluate(context), 42);
 };
 
 exports['div expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.div(x.constant(84), x.constant(5));
+    const expr = x.div(x.constant(84), x.constant(5));
     
     test.strictEqual(expr.evaluate(context), 16);
 };
 
 exports['div expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(varx, 84);
     context.bind(vary, 5);
     
-    var expr = x.div(varx, vary);
+    const expr = x.div(varx, vary);
     
     test.strictEqual(expr.evaluate(context), 16);
 };
 
 exports['rem expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.rem(x.constant(84), x.constant(5));
+    const expr = x.rem(x.constant(84), x.constant(5));
     
     test.strictEqual(expr.evaluate(context), 4);
 };
 
 exports['rem expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
     context.bind(varx, 84);
     context.bind(vary, 5);
     
-    var expr = x.rem(varx, vary);
+    const expr = x.rem(varx, vary);
     
     test.strictEqual(expr.evaluate(context), 4);
 };
 
 exports['composite expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.composite([ x.constant(1), x.constant(4), x.constant(9) ]);
+    const expr = x.composite([ x.constant(1), x.constant(4), x.constant(9) ]);
     
     test.strictEqual(expr.evaluate(context), 9);
 };
 
 exports['composite expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
-    var varz = x.variable('Z');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
+    const varz = x.variable('Z');
     
     context.bind(varx, 1);
     context.bind(vary, 4);
     context.bind(varz, 9);
     
-    var expr = x.composite([ varx, vary, varz ]);
+    const expr = x.composite([ varx, vary, varz ]);
     
     test.strictEqual(expr.evaluate(context), 9);
 };
 
 exports['tuple expression using constants'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var expr = x.tuple([ x.constant(1), x.constant(4), x.constant(9) ]);
-    var result = expr.evaluate(context);
+    const expr = x.tuple([ x.constant(1), x.constant(4), x.constant(9) ]);
+    const result = expr.evaluate(context);
     
     test.ok(result);
     test.ok(tuples.tuple(result));
@@ -254,18 +254,18 @@ exports['tuple expression using constants'] = function (test) {
 };
 
 exports['tuple expression using variables'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
-    var varz = x.variable('Z');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
+    const varz = x.variable('Z');
     
     context.bind(varx, 1);
     context.bind(vary, 4);
     context.bind(varz, 9);
     
-    var expr = x.tuple([ varx, vary, varz ]);
-    var result = expr.evaluate(context);
+    const expr = x.tuple([ varx, vary, varz ]);
+    const result = expr.evaluate(context);
     
     test.ok(result);
     test.ok(tuples.tuple(result));
@@ -273,11 +273,11 @@ exports['tuple expression using variables'] = function (test) {
 };
 
 exports['when expression with simple variable'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
+    const varx = x.variable('X');
     
-    var expr = x.when(x.variable('X'), x.variable('X'));
+    const expr = x.when(x.variable('X'), x.variable('X'));
     
     test.strictEqual(expr.evaluate(context, 42), 42);
     
@@ -285,11 +285,11 @@ exports['when expression with simple variable'] = function (test) {
 };
 
 exports['when expression no match'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
+    const varx = x.variable('X');
     
-    var expr = x.when([ x.variable('X') ], x.variable('X'));
+    const expr = x.when([ x.variable('X') ], x.variable('X'));
     
     test.strictEqual(expr.evaluate(context, 42), x.NoMatch);
     
@@ -297,20 +297,20 @@ exports['when expression no match'] = function (test) {
 };
 
 exports['function with no argument'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var expr = x.function([], x.constant(42));
+    const expr = x.function([], x.constant(42));
     test.equal(expr.arity(), 0);
     
     test.strictEqual(expr.evaluate(context, []), 42);
 };
 
 exports['function with one argument'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
     
-    var varx = x.variable('X');
+    const varx = x.variable('X');
     
-    var expr = x.function([ varx ], varx );
+    const expr = x.function([ varx ], varx );
     test.equal(expr.arity(), 1);
     
     test.strictEqual(expr.evaluate(context, [ 42 ]), 42);
@@ -319,12 +319,12 @@ exports['function with one argument'] = function (test) {
 };
 
 exports['function with two arguments'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
-    var expr = x.function([ varx, vary ], x.multiply(varx, vary) );
+    const expr = x.function([ varx, vary ], x.multiply(varx, vary) );
     test.equal(expr.arity(), 2);
     
     test.strictEqual(expr.evaluate(context, [ 21, 2 ]), 42);
@@ -334,12 +334,12 @@ exports['function with two arguments'] = function (test) {
 };
 
 exports['function no match'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
     
-    var expr = x.function([ varx, vary ], x.multiply(varx, vary) );
+    const expr = x.function([ varx, vary ], x.multiply(varx, vary) );
     test.equal(expr.arity(), 2);
     
     test.strictEqual(expr.evaluate(context, [ 42 ]), x.NoMatch);
@@ -349,17 +349,17 @@ exports['function no match'] = function (test) {
 };
 
 exports['call expression'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
-    var varz = x.variable('Z');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
+    const varz = x.variable('Z');
 
     context.bind(varz, 21);
     
-    var fn = x.function([ varx, vary ], x.multiply(varx, vary) );
+    const fn = x.function([ varx, vary ], x.multiply(varx, vary) );
     
-    var expr = x.call(fn, [ varz, 2 ]);
+    const expr = x.call(fn, [ varz, 2 ]);
     
     test.strictEqual(expr.evaluate(context), 42);
     
@@ -369,11 +369,11 @@ exports['call expression'] = function (test) {
 };
 
 exports['call expression using native expression'] = function (test) {
-    var context = contexts.context();
+    const context = contexts.context();
 
-    var varx = x.variable('X');
-    var vary = x.variable('Y');
-    var varz = x.variable('Z');
+    const varx = x.variable('X');
+    const vary = x.variable('Y');
+    const varz = x.variable('Z');
 
     context.bind(varz, 21);
     
@@ -386,7 +386,7 @@ exports['call expression using native expression'] = function (test) {
         return args[0] * args[1];
     }
     
-    var expr = x.call(fn, [ varz, 2 ]);
+    const expr = x.call(fn, [ varz, 2 ]);
     
     test.strictEqual(expr.evaluate(context), 42);
     
@@ -404,14 +404,14 @@ exports['call expression using native expression'] = function (test) {
 exports['send expression']  = function (test) {
     test.async();
     
-    var process = processes.process();
-    var varx = x.variable('X');
+    const process = processes.process();
+    const varx = x.variable('X');
     
-    var context = contexts.context();
+    const context = contexts.context();
   
     context.bind(varx, process);
     
-    var expr = x.send(varx, x.constant(42));
+    const expr = x.send(varx, x.constant(42));
     
     test.strictEqual(expr.evaluate(context), x.Async);
     
@@ -424,12 +424,12 @@ exports['send expression']  = function (test) {
 exports['receive expression']  = function (test) {
     test.async();
     
-    var process = processes.process();
-    var context = contexts.context({ process: process });
+    const process = processes.process();
+    const context = contexts.context({ process: process });
     
     process.send(42);
     
-    var expr = x.receive(function (data) {
+    const expr = x.receive(function (data) {
         test.strictEqual(data, 42);
         test.done();
     });

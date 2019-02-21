@@ -1,8 +1,8 @@
 
-var processes = require('../lib/processes');
+const processes = require('../lib/processes');
 
 exports['create process'] = function (test) {
-    var process = processes.process();
+    const process = processes.process();
     
     test.ok(process);
     test.equal(typeof process, 'object');
@@ -11,7 +11,7 @@ exports['create process'] = function (test) {
 exports['send and receive message'] = function (test) {
     test.async();
     
-    var process = processes.process();
+    const process = processes.process();
     
     process.send(42);
     
@@ -24,7 +24,7 @@ exports['send and receive message'] = function (test) {
 exports['send and receive two messages'] = function (test) {
     test.async();
     
-    var process = processes.process();
+    const process = processes.process();
     
     process.send(42);
     process.send(144);
@@ -44,7 +44,7 @@ exports['send and receive two messages'] = function (test) {
 exports['receive and send message'] = function (test) {
     test.async();
     
-    var process = processes.process();
+    const process = processes.process();
     
     process.receive(function (message) {
         test.equal(message, 42);
