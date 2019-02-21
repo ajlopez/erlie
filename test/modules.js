@@ -1,8 +1,8 @@
 
-var modules = require('../lib/modules');
+const modules = require('../lib/modules');
 
 exports['module with name'] = function (test) {
-    var module = modules.module('math');
+    const module = modules.module('math');
     
     test.ok(module);
     test.equal(typeof module, 'object');
@@ -11,8 +11,8 @@ exports['module with name'] = function (test) {
 };
 
 exports['module with name twice'] = function (test) {
-    var module = modules.module('math');
-    var moduleb = modules.module('math');
+    const module = modules.module('math');
+    const moduleb = modules.module('math');
     
     test.strictEqual(module, moduleb);
 };
@@ -22,7 +22,7 @@ exports['no current module'] = function (test) {
 };
 
 exports['current module'] = function (test) {
-    var module = modules.module('math');
+    const module = modules.module('math');
     
     modules.current(module);
     test.strictEqual(modules.current(), modules.module('math'));

@@ -1,7 +1,7 @@
 
-var tuples = require('../lib/tuples');
-var contexts = require('../lib/contexts');
-var variables = require('../lib/variables');
+const tuples = require('../lib/tuples');
+const contexts = require('../lib/contexts');
+const variables = require('../lib/variables');
 
 exports['is tuple'] = function (test) {
     test.ok(tuples.isTuple(tuples.tuple([])));
@@ -17,7 +17,7 @@ exports['is tuple'] = function (test) {
 };
 
 exports['create empty tuple'] = function (test) {
-    var tuple = tuples.tuple([]);
+    const tuple = tuples.tuple([]);
     
     test.ok(tuple);
     test.equal(typeof tuple, 'object');

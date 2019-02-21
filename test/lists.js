@@ -1,25 +1,25 @@
 
-var lists = require('../lib/lists');
-var tuples = require('../lib/tuples');
-var atoms = require('../lib/atoms');
-var variables = require('../lib/variables');
+const lists = require('../lib/lists');
+const tuples = require('../lib/tuples');
+const atoms = require('../lib/atoms');
+const variables = require('../lib/variables');
 
 exports['create list'] = function (test) {
-    var list = lists.list(42);
+    const list = lists.list(42);
     
     test.ok(list);
     test.equal(typeof list, 'object');
 };
 
 exports['create list from values'] = function (test) {
-    var list = lists.fromValues([1, 4, 9]);
+    const list = lists.fromValues([1, 4, 9]);
     
     test.ok(list);
     test.ok(lists.list(1, lists.list(4, lists.list(9))).equals(list));
 };
 
 exports['create empty list from values'] = function (test) {
-    var list = lists.fromValues([]);
+    const list = lists.fromValues([]);
     
     test.ok(list);
     test.ok(lists.isList(list));
@@ -27,30 +27,30 @@ exports['create empty list from values'] = function (test) {
 };
 
 exports['get head'] = function (test) {
-    var list = lists.list(42);
+    const list = lists.list(42);
     
     test.equal(list.head(), 42);
 };
 
 exports['get empty tail'] = function (test) {
-    var list = lists.list(42);
+    const list = lists.list(42);
     
     test.strictEqual(list.tail(), null);
 };
 
 exports['is not empty list'] = function (test) {
-    var list = lists.list(42);
+    const list = lists.list(42);
     
     test.ok(!list.isEmpty());
 };
 
 exports['equals'] = function (test) {
-    var list1 = lists.list(42);
-    var list2 = lists.list(42);
-    var list3 = lists.list(1, lists.list(2));
-    var list4 = lists.list(1, lists.list(2));
-    var list5 = lists.list(lists.list(42));
-    var list6 = lists.list(lists.list(42));
+    const list1 = lists.list(42);
+    const list2 = lists.list(42);
+    const list3 = lists.list(1, lists.list(2));
+    const list4 = lists.list(1, lists.list(2));
+    const list5 = lists.list(lists.list(42));
+    const list6 = lists.list(lists.list(42));
     
     test.ok(list1.equals(list1));
     test.ok(list1.equals(list2));
@@ -67,8 +67,8 @@ exports['equals'] = function (test) {
 };
 
 exports['is list'] = function (test) {
-    var list1 = lists.list(42);
-    var list2 = lists.list(1, lists.list(2));
+    const list1 = lists.list(42);
+    const list2 = lists.list(1, lists.list(2));
     
     test.ok(lists.isList(list1));
     test.ok(lists.isList(list2));
@@ -82,7 +82,7 @@ exports['is list'] = function (test) {
 };
 
 exports['empty list'] = function (test) {
-    var result = lists.empty();
+    const result = lists.empty();
     
     test.ok(result);
     test.ok(lists.isList(result));
