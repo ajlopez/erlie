@@ -62,3 +62,16 @@ exports['process match already bound variable'] = function (test) {
     test.strictEqual(result, 42);
 };
 
+exports['process arithmetic expressions'] = function (test) {
+    test.strictEqual(process('2 + 40'), 42);
+    test.strictEqual(process('44 - 2'), 42);
+    test.strictEqual(process('21 * 2'), 42);
+    test.strictEqual(process('84 / 2'), 42);
+    test.strictEqual(process('2 * 20 + 2'), 42);
+    test.strictEqual(process('2 + 2 * 20'), 42);
+    test.strictEqual(process('2 + 80 / 2'), 42);
+    test.strictEqual(process('(4 + 80) / 2'), 42);
+    test.strictEqual(process('-42'), -42);
+    test.strictEqual(process('-42 * -1'), 42);
+};
+
