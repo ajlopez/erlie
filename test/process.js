@@ -60,6 +60,7 @@ exports['process match already bound variable'] = function (test) {
     
     test.ok(result);
     test.strictEqual(result, 42);
+    test.strictEqual(process('X + X', context), 84);
 };
 
 exports['process arithmetic expressions'] = function (test) {

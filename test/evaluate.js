@@ -25,10 +25,10 @@ exports['evaluate unbound variable'] = function (test) {
 };
 
 exports['evaluate match variable'] = function (test) {
-    const result = erlie.evaluate('X = 42. 42');
+    const result = erlie.evaluate('X = 42. X. X + 1');
     
     test.ok(result);
-    test.deepEqual(result, [ true, 42 ]);
+    test.deepEqual(result, [ true, 42, 43 ]);
 };
 
 
