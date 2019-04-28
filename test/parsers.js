@@ -1,5 +1,7 @@
 
 const parsers = require('../lib/parsers');
+const atoms = require('../lib/atoms');
+const variables = require('../lib/variables');
 
 exports['parse integer constant'] = function (test) {
     const result = parsers.parse('term', '42');
@@ -21,7 +23,8 @@ exports['parse atom'] = function (test) {
     
     test.ok(result);
     test.equal(result.ntype(), 'atom');
-    test.equal(result.name(), 'foo');
+    test.ok(atoms.isAtom(result.value()));
+    test.equal(result.value().name(), 'foo');
 };
 
 exports['parse variable starting with uppercase letter'] = function (test) {
@@ -29,7 +32,8 @@ exports['parse variable starting with uppercase letter'] = function (test) {
     
     test.ok(result);
     test.equal(result.ntype(), 'variable');
-    test.equal(result.name(), 'X');
+    test.ok(variables.isVariable(result.value()));
+    test.equal(result.value().name(), 'X');
 };
 
 exports['parse variable starting with underscore'] = function (test) {
@@ -37,7 +41,8 @@ exports['parse variable starting with underscore'] = function (test) {
     
     test.ok(result);
     test.equal(result.ntype(), 'variable');
-    test.equal(result.name(), '_X');
+    test.ok(variables.isVariable(result.value()));
+    test.equal(result.value().name(), '_X');
 };
 
 exports['parse anonymous variable'] = function (test) {
@@ -45,7 +50,8 @@ exports['parse anonymous variable'] = function (test) {
     
     test.ok(result);
     test.equal(result.ntype(), 'variable');
-    test.equal(result.name(), '_');
+    test.ok(variables.isVariable(result.value()));
+    test.equal(result.value().name(), '_');
 };
 
 exports['parse quoted atom'] = function (test) {
@@ -53,7 +59,8 @@ exports['parse quoted atom'] = function (test) {
     
     test.ok(result);
     test.equal(result.ntype(), 'atom');
-    test.equal(result.name(), 'X');
+    test.ok(atoms.isAtom(result.value()));
+    test.equal(result.value().name(), 'X');
 };
 
 exports['parse add integers'] = function (test) {
@@ -154,7 +161,7 @@ exports['parse match expression'] = function (test) {
     test.ok(result);
     test.equal(result.ntype(), 'match');
     test.equal(result.left().ntype(), 'variable');
-    test.equal(result.left().name(), 'X');
+    test.equal(result.left().value().name(), 'X');
     test.equal(result.right().ntype(), 'constant');
     test.equal(result.right().value(), 42);
 };
@@ -174,9 +181,9 @@ exports['parse tuple expression'] = function (test) {
     test.equal(result.ntype(), 'tuple');
     test.equal(result.expressions().length, 2);
     test.equal(result.expressions()[0].ntype(), 'atom');
-    test.equal(result.expressions()[0].name(), 'foo');
+    test.equal(result.expressions()[0].value().name(), 'foo');
     test.equal(result.expressions()[1].ntype(), 'atom');
-    test.equal(result.expressions()[1].name(), 'bar');
+    test.equal(result.expressions()[1].value().name(), 'bar');
 };
 
 exports['parse empty list expression'] = function (test) {
