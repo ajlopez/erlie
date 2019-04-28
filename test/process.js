@@ -39,3 +39,26 @@ exports['process bound variable'] = function (test) {
     test.ok(result);
     test.strictEqual(result, 42);
 };
+
+exports['process match unbound variable'] = function (test) {
+    const context = contexts.context();
+    
+    test.strictEqual(process('X = 42', context), true);
+    
+    const result = process('X', context);
+    
+    test.ok(result);
+    test.strictEqual(result, 42);
+};
+
+exports['process match already bound variable'] = function (test) {
+    const context = contexts.context();
+    context.bind(variables.variable('X'), 42);
+    test.strictEqual(process('X = 1', context), false);
+    
+    const result = process('X', context);
+    
+    test.ok(result);
+    test.strictEqual(result, 42);
+};
+
