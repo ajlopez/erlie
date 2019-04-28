@@ -24,4 +24,11 @@ exports['evaluate unbound variable'] = function (test) {
     test.equal(result.name(), 'X');
 };
 
+exports['evaluate match variable'] = function (test) {
+    const result = erlie.evaluate('X = 42. 42');
+    
+    test.ok(result);
+    test.deepEqual(result, [ true, 42 ]);
+};
+
 
