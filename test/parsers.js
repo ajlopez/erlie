@@ -1,233 +1,204 @@
 
 const parsers = require('../lib/parsers');
-const contexts = require('../lib/contexts');
-const atoms = require('../lib/atoms');
-const variables = require('../lib/variables');
-const tuples = require('../lib/tuples');
-const lists = require('../lib/lists');
-
-exports['create parser as object'] = function (test) {
-    const parser = parsers.parser('foo');
-    
-    test.ok(parser);
-    test.equal(typeof parser, 'object');
-};
 
 exports['parse integer constant'] = function (test) {
-    const parser = parsers.parser('42');
-    
-    const result = parser.parse();
+    const result = parsers.parse('term', '42');
     
     test.ok(result);
-    test.equal(result.evaluate(), 42);
+    test.equal(result.ntype(), 'constant');
+    test.equal(result.value(), 42);
 };
 
 exports['parse string constant'] = function (test) {
-    const parser = parsers.parser('"foo"');
+    const result = parsers.parse('term', '"foo"');
     
-    const result = parser.parse();
-    
-    test.ok(result);
-    test.equal(result.evaluate(), "foo");
+    test.equal(result.ntype(), 'constant');
+    test.equal(result.value(), "foo");
 };
 
 exports['parse atom'] = function (test) {
-    const parser = parsers.parser('foo');
-    
-    const result = parser.parse();
+    const result = parsers.parse('term', 'foo');
     
     test.ok(result);
-    test.strictEqual(result.evaluate(), result);
-    test.ok(atoms.isAtom(result));
+    test.equal(result.ntype(), 'atom');
+    test.equal(result.name(), 'foo');
 };
 
 exports['parse variable starting with uppercase letter'] = function (test) {
-    const parser = parsers.parser('X');
-    const context = contexts.context();
-    const varx = variables.variable('X');
-    
-    context.bind(varx, 42);
-    
-    var result = parser.parse();
+    const result = parsers.parse('term', 'X');
     
     test.ok(result);
-    test.strictEqual(result.evaluate(context), 42);
-    test.ok(variables.isVariable(result));
-    test.ok(result.equals(varx));
+    test.equal(result.ntype(), 'variable');
+    test.equal(result.name(), 'X');
 };
 
 exports['parse variable starting with underscore'] = function (test) {
-    const parser = parsers.parser('_X');
-    const context = contexts.context();
-    const varx = variables.variable('_X');
-    
-    context.bind(varx, 42);
-    
-    const result = parser.parse();
+    const result = parsers.parse('term', '_X');
     
     test.ok(result);
-    test.strictEqual(result.evaluate(context), 42);
-    test.ok(variables.isVariable(result));
-    test.ok(result.equals(varx));
+    test.equal(result.ntype(), 'variable');
+    test.equal(result.name(), '_X');
 };
 
 exports['parse anonymous variable'] = function (test) {
-    const parser = parsers.parser('_');
-    const context = contexts.context();
-    const avar = variables.variable('_');
-    
-    const result = parser.parse();
+    const result = parsers.parse('term', '_');
     
     test.ok(result);
-    test.ok(result.evaluate(context).equals(avar));
-    test.ok(variables.isVariable(result));
-    test.ok(result.equals(avar));
+    test.equal(result.ntype(), 'variable');
+    test.equal(result.name(), '_');
 };
 
 exports['parse quoted atom'] = function (test) {
-    const parser = parsers.parser("'X'");
-    const context = contexts.context();
-    const xatom = atoms.atom('X');
-    
-    const result = parser.parse();
+    const result = parsers.parse('term', "'X'");
     
     test.ok(result);
-    test.ok(result.evaluate(context).equals(xatom));
-    test.ok(atoms.isAtom(result));
-    test.ok(result.equals(xatom));
+    test.equal(result.ntype(), 'atom');
+    test.equal(result.name(), 'X');
 };
 
 exports['parse add integers'] = function (test) {
-    const parser = parsers.parser("2 + 40");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "2 + 40");
     
     test.ok(result);
-    test.equal(result.evaluate(context), 42);
+    test.equal(result.ntype(), 'binary');
+    test.equal(result.operator(), '+');    
+    test.equal(result.left().ntype(), 'constant');
+    test.equal(result.left().value(), 2);
+    test.equal(result.right().ntype(), 'constant');
+    test.equal(result.right().value(), 40);
 };
 
 exports['parse subtract integers'] = function (test) {
-    const parser = parsers.parser("44 - 2");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "44 - 2");
     
     test.ok(result);
-    test.equal(result.evaluate(context), 42);
+    test.equal(result.ntype(), 'binary');
+    test.equal(result.operator(), '-');
+    test.equal(result.left().ntype(), 'constant');
+    test.equal(result.left().value(), 44);
+    test.equal(result.right().ntype(), 'constant');
+    test.equal(result.right().value(), 2);
 };
 
 exports['parse multiply integers'] = function (test) {
-    const parser = parsers.parser("21 * 2");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "21 * 2");
     
     test.ok(result);
-    test.equal(result.evaluate(context), 42);
+    test.equal(result.ntype(), 'binary');
+    test.equal(result.operator(), '*');
+    test.equal(result.left().ntype(), 'constant');
+    test.equal(result.left().value(), 21);
+    test.equal(result.right().ntype(), 'constant');
+    test.equal(result.right().value(), 2);
 };
 
 exports['parse divide integers'] = function (test) {
-    const parser = parsers.parser("84 / 2");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "84 / 2");
     
     test.ok(result);
-    test.equal(result.evaluate(context), 42);
+    test.equal(result.ntype(), 'binary');
+    test.equal(result.operator(), '/');
+    test.equal(result.left().ntype(), 'constant');
+    test.equal(result.left().value(), 84);
+    test.equal(result.right().ntype(), 'constant');
+    test.equal(result.right().value(), 2);
+};
+
+exports['parse multiply and add integers'] = function (test) {
+    const result = parsers.parse('expression', "2 * 20 + 2");
+    
+    test.ok(result);
+    test.equal(result.ntype(), 'binary');
+    test.equal(result.operator(), '+');
+    test.equal(result.left().ntype(), 'binary');
+    test.equal(result.left().operator(), '*');
+    test.equal(result.left().left().ntype(), 'constant');
+    test.equal(result.left().left().value(), 2);
+    test.equal(result.left().right().ntype(), 'constant');
+    test.equal(result.left().right().value(), 20);
+    test.equal(result.right().ntype(), 'constant');
+    test.equal(result.right().value(), 2);
 };
 
 exports['parse add and multiply integers'] = function (test) {
-    const parser = parsers.parser("2 * 20 + 2");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "2 + 2 * 20");
     
     test.ok(result);
-    test.equal(result.evaluate(context), 42);
+    test.equal(result.ntype(), 'binary');
+    test.equal(result.operator(), '+');
+    test.equal(result.left().ntype(), 'constant');
+    test.equal(result.left().value(), 2);
+    test.equal(result.right().ntype(), 'binary');
+    test.equal(result.right().operator(), '*');
+    test.equal(result.right().left().ntype(), 'constant');
+    test.equal(result.right().left().value(), 2);
+    test.equal(result.right().right().ntype(), 'constant');
+    test.equal(result.right().right().value(), 20);
 };
 
 exports['parse simple expression in parentheses'] = function (test) {
-    const parser = parsers.parser("(84 / 2)");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "(84 / 2)");
     
     test.ok(result);
-    test.equal(result.evaluate(context), 42);
+    test.equal(result.ntype(), 'binary');
+    test.equal(result.operator(), '/');
+    test.equal(result.left().ntype(), 'constant');
+    test.equal(result.left().value(), 84);
+    test.equal(result.right().ntype(), 'constant');
+    test.equal(result.right().value(), 2);
 };
 
 exports['parse match expression'] = function (test) {
-    const parser = parsers.parser("X = 42");
-    const context = contexts.context();
-    const varx = variables.variable('X');
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "X = 42");
     
     test.ok(result);
-    test.equal(result.evaluate(context), true);
-    test.equal(context.resolve(varx), 42);
+    test.equal(result.ntype(), 'match');
+    test.equal(result.left().ntype(), 'variable');
+    test.equal(result.left().name(), 'X');
+    test.equal(result.right().ntype(), 'constant');
+    test.equal(result.right().value(), 42);
 };
 
 exports['parse empty tuple expression'] = function (test) {
-    const parser = parsers.parser("{}");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "{}");
     
     test.ok(result);
-    test.ok(tuples.isTuple(result.evaluate(context)));
+    test.equal(result.ntype(), 'tuple');
+    test.deepEqual(result.expressions(), []);
 };
 
 exports['parse tuple expression'] = function (test) {
-    const parser = parsers.parser("{ foo, bar }");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "{ foo, bar }");
     
     test.ok(result);
-    
-    const tuple = result.evaluate(context);
-    
-    test.ok(tuple);
-    test.ok(tuples.isTuple(tuple));
-    test.equal(tuple.size(), 2);
-    
-    test.ok(atoms.isAtom(tuple.element(0)));
-    test.ok(atoms.isAtom(tuple.element(1)));
-    
-    test.equal(tuple.element(0).name(), 'foo');
-    test.equal(tuple.element(1).name(), 'bar');
+    test.equal(result.ntype(), 'tuple');
+    test.equal(result.expressions().length, 2);
+    test.equal(result.expressions()[0].ntype(), 'atom');
+    test.equal(result.expressions()[0].name(), 'foo');
+    test.equal(result.expressions()[1].ntype(), 'atom');
+    test.equal(result.expressions()[1].name(), 'bar');
 };
 
 exports['parse empty list expression'] = function (test) {
-    const parser = parsers.parser("[]");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "[]");
     
     test.ok(result);
-
-    const list = result.evaluate(context);
-    
-    test.ok(list);
-    test.ok(lists.isList(list));
-    test.ok(list.isEmpty());
+    test.equal(result.ntype(), 'list');
+    test.deepEqual(result.expressions(), []);
 };
 
 exports['parse list expression'] = function (test) {
-    const parser = parsers.parser("[1, 4, 9]");
-    const context = contexts.context();
-    
-    const result = parser.parse();
+    const result = parsers.parse('expression', "[ 1, 4, 9 ]");
     
     test.ok(result);
-
-    const list = result.evaluate(context);
-    
-    test.ok(list);
-    test.ok(lists.isList(list));
-    test.ok(!list.isEmpty());
-    test.ok(list.equals(lists.fromValues([1, 4, 9])));
+    test.equal(result.ntype(), 'list');
+    test.equal(result.expressions().length, 3);
+    test.equal(result.expressions()[0].ntype(), 'constant');
+    test.equal(result.expressions()[0].value(), 1);
+    test.equal(result.expressions()[1].ntype(), 'constant');
+    test.equal(result.expressions()[1].value(), 4);
+    test.equal(result.expressions()[2].ntype(), 'constant');
+    test.equal(result.expressions()[2].value(), 9);
 };
+
 
